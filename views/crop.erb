@@ -1,0 +1,81 @@
+<div class="row-fluid">
+    <div class="span3">
+        <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+            <li class="nav-header"><%= @pdf.filename %></li>
+            <form action="." method="get" accept-charset="utf-8">
+                <li>
+                    <div class="input-append">
+                        <input type="text" name="top" id="top" value="5" class="input-mini" />
+                        <span class="add-on">% from Top</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="input-append">
+                        <input type="text" name="right" id="right" value="5" class="input-mini" />
+                        <span class="add-on">% from Right</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="input-append">
+                        <input type="text" name="bottom" id="bottom" value="5" class="input-mini" />
+                        <span class="add-on">% from Bottom</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="input-append">
+                        <input type="text" name="left" id="left" value="5" class="input-mini" />
+                        <span class="add-on">% from Left</span>
+                    </div>
+                </li>
+
+                <li><input type="button" class="btn btn-info" id="preview" value="Preview" /></li>
+            </form>
+        </ul>
+        </div><!--/.well -->
+
+        <img style="margin-left: 30px;" src="/assets/img/ajax-loader.gif" id="spinner" class="invisible" />
+
+    </div><!--/span-->
+    <div class="span9" id="pdf-area">
+        <embed  src="/uploads/<%= @pdf.sha1 %>/original.pdf"
+                type="application/pdf" width="100%" height="800" id="pdf-preview" />
+    </div><!--/span-->
+</div><!--/row-->
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function(){
+        $('input#preview').click(function() {
+            $('#spinner').removeClass('invisible');
+
+            var top = $('#top').val();
+            var right = $('#right').val();
+            var bottom = $('#bottom').val();
+            var left = $('#left').val();
+
+            var dataString = 'top='+ top + '&right=' + right + '&bottom=' + bottom + '&left=' + left;
+
+            $.ajax({
+            type: "POST",
+            url: "/preview/<%= @pdf.sha1 %>/",
+            data: dataString,
+            success: function(data) {
+                if (data.url) {
+                    console.log(data.url);
+                    var embed = $('embed#pdf-preview');
+                    var parent_element = $(embed).parent();
+
+                    $('embed#pdf-preview').remove();
+                    $(embed).attr('src', data.url);
+                    parent_element.append(embed);
+                }
+                $('#spinner').addClass('invisible')
+            },
+            error: function() {
+                $('#spinner').addClass('invisible')
+            }
+            });
+            return false;
+        });
+    });
+</script>

@@ -1,0 +1,41 @@
+GIT
+  remote: https://github.com/tcocca/active_pdftk
+  revision: 0a539f289fb73fb002a8fae591ceab57b7b6926c
+  specs:
+    active_pdftk (0.1.0)
+      builder (>= 2.1.2)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    Ascii85 (1.0.2)
+    builder (3.1.3)
+    hashery (2.0.1)
+    pdf-reader (1.2.0)
+      Ascii85 (~> 1.0.0)
+      hashery (~> 2.0)
+      ruby-rc4
+    prawn (0.12.0)
+      pdf-reader (>= 0.9.0)
+      ttfunk (~> 1.0.2)
+    puma (1.6.3)
+      rack (~> 1.2)
+    rack (1.4.1)
+    rack-protection (1.2.0)
+      rack
+    ruby-rc4 (0.1.5)
+    sinatra (1.3.3)
+      rack (~> 1.3, >= 1.3.6)
+      rack-protection (~> 1.2)
+      tilt (~> 1.3, >= 1.3.3)
+    tilt (1.3.3)
+    ttfunk (1.0.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  active_pdftk!
+  prawn
+  puma
+  sinatra
